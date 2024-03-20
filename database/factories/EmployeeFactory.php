@@ -23,14 +23,14 @@ class EmployeeFactory extends Factory
     public function definition()
     {
         return [
-            'passport' => $this->faker->unique()->regexify('[A-Z]{2}[0-9]{7}'), // Unique passport number
+            'passport' => $this->faker->unique()->regexify('[A-Z]{2}[0-9]{7}'), //Passport uniqu bo'lishi kerak
             'last_name' => $this->faker->lastName,
             'first_name' => $this->faker->firstName,
             'father_name' => $this->faker->lastName,
             'position' => $this->faker->jobTitle,
             'phone_number' => $this->faker->phoneNumber,
             'address' => $this->faker->address,
-            'company_id' => \App\Models\Company::factory(), // Use the Company factory to get a company ID
+            'company_id' => \App\Models\Company::factory()->create()->id,
         ];
     }
 }

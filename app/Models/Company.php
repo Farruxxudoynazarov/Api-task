@@ -16,11 +16,16 @@ class Company extends Model
         'email',
         'website',
         'phone_number',
+        'user_id'
     ];
 
 
     public function employees()
     {
         return $this->hasMany(Employee::class);
+    }
+
+    public function users(){
+        return $this->hasMany(User::class);
     }
 }

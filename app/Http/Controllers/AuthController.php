@@ -34,36 +34,41 @@ class AuthController extends Controller
     }
 
         public function logout(Request $request){
-            
-            $request->user()->currentAccessToken()->delete();
+            $user = $request->user();
 
-            return response([
-                'logged out',   
-            ]);
+            if ($user) {
+                $user->currentAccessToken()->delete();
+                return response(['message' => 'Logged out successfully']);
+            } else {
+                return response(['message' => 'No authenticated user'], 401);
+            }
         }
+
 
 
         public function register(Request $request)
-        {
+{
+    $request->validate([
+        'name' => 'required|max:255',
+        'email' => 'required|email',
+        'password' => 'required|min:8',
+        'role' => 'in:admin,company',
+    ]);
 
-            $request->validate([
-                'name' => 'required|max:255',
-                'email' => 'required|email',
-                'password' => 'required|min:8',
-            ]);
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => $request->role ?? 'company',
+        'company_id' => $request->company_id 
+    ]);
 
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
+    $token = $user->createToken($user->name)->plainTextToken;
 
-            $token = $user->createToken($user->name)->plainTextToken;
-
-            return response([
-                'user' => $user,
-                'token' => $token
-            ]);
-        }
+    return response([
+        'user' => $user,
+        'token' => $token
+    ]);
+}
 }
 

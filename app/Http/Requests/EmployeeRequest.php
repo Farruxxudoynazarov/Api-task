@@ -29,7 +29,8 @@ class EmployeeRequest extends FormRequest
                 'position' => 'required',
                 'phone_number' => 'required',
                 'address' => 'required|max:255',
-                'company_id' => 'required|exists:companies,id',
+                'company_id' => 'required_if:role,company|exists:companies,id'
+
         ];
     }
 }

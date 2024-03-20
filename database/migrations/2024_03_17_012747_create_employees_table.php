@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('passport')->unique();
-            $table->string('last_name');
-            $table->string('first_name');
-            $table->string('father_name');
-            $table->string('position');
-            $table->string('phone_number');
-            $table->string('address');
+            $table->string('last_name')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('father_name')->nullable();
+            $table->string('position')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('address')->nullable();
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });

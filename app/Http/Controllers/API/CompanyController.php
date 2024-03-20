@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 // use Illuminate\Http\Request;
+use App\Models\Employee;
 use App\Http\Requests\CompanyRequest;
 
 class CompanyController extends Controller
@@ -13,15 +14,26 @@ class CompanyController extends Controller
      * Display a listing of the resource.
      */
 
+     
 
-     public function __construct(){
-        $this->middleware(['permission:manage companies', 'auth:sanctum']);
+     public function __construct()
+     {
+         // Faqat ma'lum metodlar uchun ruxsatlarni tekshirish
+         $this->middleware('can:viewAny,App\Models\Company')->only(['index']);
+         $this->middleware('can:view,company')->only(['show']);
+         $this->middleware('can:create,App\Models\Company')->only(['store']);
+         $this->middleware('can:update,company')->only(['update']);
+         $this->middleware('can:delete,company')->only(['destroy']);
      }
      
-    public function index()
+
+
+  public function index()
     {
+        
+
         $companies = Company::all();
-        return response()->json(['companies' => $companies], 200);
+        return response()->json($companies);
     }
 
     /**
@@ -30,6 +42,7 @@ class CompanyController extends Controller
     public function store(CompanyRequest $request, Company $company)
     {
        
+
 
         $company = Company::create($request->validated());
 
@@ -42,6 +55,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
+
         return response()->json(['company' => $company], 200);
     }
 

@@ -45,4 +45,16 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof PermissionDaniedException) {
+            // Log the exception for debugging
+
+            // Return a response indicating permission denied
+            return response()->json(['error' => 'Permission Denied'], 403);
+        }
+
+        return parent::render($request, $exception);
+    }
 }

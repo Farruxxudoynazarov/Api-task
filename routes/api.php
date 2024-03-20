@@ -19,17 +19,9 @@ use App\Models\Employee;
 |
 */
 
-Route::post('login', [AuthController::class, 'login']);
-Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-Route::post('register', [AuthController::class, 'register']);
 
-
-
-
-
-
-Route::middleware('auth:sanctum')->get('/test', function(){
-    return 'auth kerak bolgan url'; 
+Route::middleware('auth:sanctum')->get('/test', function () {
+    return 'auth kerak bolgan url';
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -37,9 +29,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/logout', 'AuthController@logout')->middleware('auth:sanctum');
 
- 
 
-Route::apiResource('companies', CompanyController::class);
-Route::apiResource('employee',EmployeeController::class)->middleware('auth:sanctum');
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('employees', EmployeeController::class);
+    Route::apiResource('companies', CompanyController::class);
+});

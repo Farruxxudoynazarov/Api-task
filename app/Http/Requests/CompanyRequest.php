@@ -23,11 +23,11 @@ class CompanyRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'director_full_name' => 'required',
+            'leader_name' => 'required',
             'address' => 'required',
             'email' => 'required|email',
             'website' => 'nullable|url',
-            'phone' => 'required',
+            'phone_number' => 'required',
         ];
     }
 }
