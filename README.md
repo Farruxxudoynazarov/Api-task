@@ -5,8 +5,8 @@
 
 2. Ishlatilgan Texnologiyalar
 ``` 
-Laravel Framework
-MySQL yoki boshqa ma'lumotlar bazasi
+Laravel 10 Framework
+MySQL ma'lumotlar bazasi
 Sanctum autentifikatsiya```
 
 
@@ -14,10 +14,10 @@ Sanctum autentifikatsiya```
 Loyihani o'rnatish va ishga tushirish bo'yicha ko'rsatmalar.
 
 
-```git clone https://github.com/Farruxxudoynazarov/Api-task.git
+git clone https://github.com/Farruxxudoynazarov/Api-task.git
 cd your-repository
 composer install
 php artisan serve 
 php artisan migrate
 php artisan db:seed
- ```
+
