@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\API\CompanyController;
-use App\Models\Employee;
+// use App\Models\Employee;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,18 +20,18 @@ use App\Models\Employee;
 */
 
 
-Route::middleware('auth:sanctum')->get('/test', function () {
-    return 'auth kerak bolgan url';
-});
+// Route::middleware('auth:sanctum')->get('/test', function () {
+//     return 'auth kerak bolgan url';
+// });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/logout', 'AuthController@logout')->middleware('auth:sanctum');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 
 

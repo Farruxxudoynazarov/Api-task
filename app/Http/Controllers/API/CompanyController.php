@@ -18,7 +18,6 @@ class CompanyController extends Controller
 
      public function __construct()
      {
-         // Faqat ma'lum metodlar uchun ruxsatlarni tekshirish
          $this->middleware('can:viewAny,App\Models\Company')->only(['index']);
          $this->middleware('can:view,company')->only(['show']);
          $this->middleware('can:create,App\Models\Company')->only(['store']);
