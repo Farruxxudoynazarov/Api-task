@@ -18,9 +18,9 @@ class CompanyController extends Controller
 
      public function __construct()
      {
-         $this->middleware('can:viewAny,App\Models\Company')->only(['index']);
+         $this->middleware('can:viewAny,company')->only(['index']);
          $this->middleware('can:view,company')->only(['show']);
-         $this->middleware('can:create,App\Models\Company')->only(['store']);
+         $this->middleware('can:create,company')->only(['store']);
          $this->middleware('can:update,company')->only(['update']);
          $this->middleware('can:delete,company')->only(['destroy']);
      }
