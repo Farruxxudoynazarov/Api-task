@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 // use Illuminate\Http\Response;
 // use Dotenv\Exception\ValidationException;
 // use Illuminate\Support\Facades\Auth;
@@ -21,8 +23,6 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-
-
         if (!$user || !Hash::check($request->password, $user->password)){
             return response(['The provided credentials are incorrect.']);
         }
@@ -33,16 +33,7 @@ class AuthController extends Controller
 
     }
 
-        public function logout(Request $request){
-            $user = $request->user();
-
-            if ($user) {
-                $user->currentAccessToken()->delete();
-                return response(['message' => 'Logged out successfully']);
-            } else {
-                return response(['message' => 'No authenticated user'], 401);
-            }
-        }
+      
 
 
 
@@ -69,6 +60,15 @@ class AuthController extends Controller
         'user' => $user,
         'token' => $token
     ]);
+
+
 }
+public function logout(Request $request)
+{
+    $request->user()->tokens()->delete();
+    return response()->json(['message' => 'Successfully logged out']);
+}
+
+
 }
 

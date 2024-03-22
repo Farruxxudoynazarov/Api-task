@@ -11,7 +11,7 @@ It will show you how to install and run the project. <br>
 
 
  <h1>Clone project</h1> <br>
-`git clone https://github.com/Farruxxudoynazarov/Api-task.git`
+ `git clone https://github.com/Farruxxudoynazarov/Api-task.git`
 
  <h2>Setup</h2><br>
 <ul>

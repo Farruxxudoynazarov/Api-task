@@ -13,7 +13,7 @@ class EmployeePolicy
      */
     public function viewAny(User $user): bool
     {
-       return true;
+       return $user->role === 'admin' || $user->role ==='company';
     }
 
     /**
@@ -21,7 +21,7 @@ class EmployeePolicy
      */
     public function view(User $user, Employee $employee): bool
     {
-        return true;
+        return $user->role === 'admin' || $user->role === 'company' || $user->company_id === $employee->company_id;
     }
 
     /**
@@ -37,7 +37,7 @@ class EmployeePolicy
      */
     public function update(User $user, Employee $employee): bool
     {
-        return $user->role === 'company' || $user->id === $employee->company->user_id;
+        return $user->role === 'company' || $user->company_id === $employee->company_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class EmployeePolicy
      */
     public function delete(User $user, Employee $employee): bool
     {
-        return $user->role === 'company' || $user->id === $employee->company->user_id;
+        return $user->role === 'company';
 
     }
 

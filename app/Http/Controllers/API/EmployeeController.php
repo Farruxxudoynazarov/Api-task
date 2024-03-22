@@ -16,42 +16,46 @@ class EmployeeController extends Controller
 
 
 
+
+
     public function __construct()
     {
-        $this->authorizeResource(Employee::class, 'employee');
+        $this->middleware('can:viewAny,App\Models\Employee')->only('index');
+        $this->middleware('can:view,employee')->only('show');
+        $this->middleware('can:create,App\Models\Employee')->only('store');
+        $this->middleware('can:update,employee')->only('update');
+        $this->middleware('can:delete,employee')->only('destroy');
     }
 
 
 
-     public function index()
-     {
-        if (auth()->user()->role === 'admin') {
+
+    public function index()
+    {
+        $user = auth()->user();
+
+        if ($user->role === 'admin' || $user->role === 'company') {
             $employees = Employee::all();
         } else {
-            $employees = Employee::where('company_id', auth()->user()->company_id)->get();
-    //    @dd($employees);
+            $employees = Employee::where('company_id', $user->company_id)->get();
         }
-
         return response()->json($employees);
-     }
+    }
 
-    
 
-       
+
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(EmployeeRequest $request, Employee $employee )
+    public function store(EmployeeRequest $request, Employee $employee)
     {
-       
-        $this->authorize('create', Employee::class);
 
-         $company = Company::create($request->validated());
 
-         return response()->json($employee, 201);
+        $employee = Employee::create($request->validated());
 
-    }    
+        return response()->json($employee, 201);
+    }
 
 
     /**
@@ -59,37 +63,28 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        $this->authorize('view', $employee);
 
-    return response()->json($employee);
-
+        return response()->json($employee);
     }
-    
+
     /**
      * Update the specified resource in storage.
      */
     public function update(EmployeeRequest $request, Employee $employee)
     {
-        
-            $this->authorize('update', $employee);
 
-            $employee->update($request->all());
-            return response()->json($employee);
-        // }
+
+        $employee->update($request->validated());
+        return response()->json($employee);
     }
 
     /**
      * Remove the specified resource from storage.
      */
 
-     public function destroy(Employee $employee)
-{
-    $this->authorize('delete', $employee);
-
-    $employee->delete();
-
-    return response()->json(null, 204);
-    
+    public function destroy(Employee $employee)
+    {
+        $employee->delete();
+        return response()->json(['message' => 'Success'], 200);
     }
-
 }

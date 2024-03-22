@@ -21,7 +21,7 @@ class CompanyPolicy
      */
     public function view(User $user, Company $company): bool
     {
-        return $user->role === 'admin' || $user->id === $company->user_id;
+        return $user->role === 'admin' || $user->company_id === $company->id;
     }
 
     /**
@@ -37,7 +37,7 @@ class CompanyPolicy
      */
     public function update(User $user, Company $company): bool
     {
-        return $user->role === 'admin' || $user->id === $company->user_id;
+        return $user->role === 'admin' || $user->company_id === $company->id;
     }
 
     /**

@@ -18,11 +18,11 @@ class CompanyController extends Controller
 
      public function __construct()
      {
-         $this->middleware('can:viewAny,company')->only(['index']);
-         $this->middleware('can:view,company')->only(['show']);
-         $this->middleware('can:create,company')->only(['store']);
-         $this->middleware('can:update,company')->only(['update']);
-         $this->middleware('can:delete,company')->only(['destroy']);
+        $this->middleware('can:viewAny, App\Models\Company')->only('index');
+        $this->middleware('can:create, App\Models\Company')->only('store');
+        $this->middleware('can:view,company')->only('show');
+        $this->middleware('can:update,company')->only('update');
+        $this->middleware('can:delete,company')->only('destroy');
      }
      
 
@@ -71,10 +71,10 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Company  $company)
-    {
-        $company->delete();
+    public function destroy(Company $company)
+{
+    $company->delete();
+    return response()->json(['message' => 'Success'], 200);
+}
 
-        return 'success company delete';
-    }
 }
